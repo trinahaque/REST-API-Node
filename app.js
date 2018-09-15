@@ -2,10 +2,8 @@
 const express = require('express');
 const app = express();
 
-app.use((requestAnimationFrame, res, next) => {
-    res.status(200).json({
-        message: "Email changed again"
-    });
-});
+const productRoutes = require('./api/routes/products');
+
+app.use('/products', productRoutes);
 
 module.exports = app;
