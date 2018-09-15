@@ -4,8 +4,7 @@ const app = express();
 
 app.use((requestAnimationFrame, res, next) => {
     res.status(200).json({
-        message: "Email changed",
-        message2: "hello"
+        message: "Email changed again"
     });
 });
 
