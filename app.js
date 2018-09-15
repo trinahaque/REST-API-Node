@@ -4,7 +4,7 @@ const app = express();
 
 app.use((requestAnimationFrame, res, next) => {
     res.status(200).json({
-        message: "It works!"
+        message: "Changed user name"
     });
 });
 
