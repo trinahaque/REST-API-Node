@@ -12,5 +12,34 @@ router.post('/', (req, res, next) => {
         message: 'Handling POST requests to /products'
     });
 });
+ 
+// sending product id
+router.get('/:productId', (req, res, next) => {
+    const id = req.params.productId;
+    if (id === 'special'){
+        res.status(200).json({
+            message: 'You discovered the special ID',
+            id: id
+        });
+    }
+    else{
+        res.status(200).json({
+            message: "failed"
+        })
+    }
+});
+
+// patch basically updates a record
+router.patch('/', (req, res, next) => {
+    res.status(200).json({
+        message: 'Updating requests to /products'
+    });
+});
+
+router.delete('/', (req, res, next) => {
+    res.status(200).json({
+        message: 'Deleting requests to /products'
+    });
+});
 
 module.exports = router;
