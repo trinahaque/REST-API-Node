@@ -1,0 +1,20 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "practive node.js tutorial using node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "resultful",
+    "api",
+    "in",
+    "node"
+  ],
+  "author": "Trina Haque",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
