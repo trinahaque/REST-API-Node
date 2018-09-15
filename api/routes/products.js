@@ -30,13 +30,13 @@ router.get('/:productId', (req, res, next) => {
 });
 
 // patch basically updates a record
-router.patch('/', (req, res, next) => {
+router.patch('/:productId', (req, res, next) => {
     res.status(200).json({
         message: 'Updating requests to /products'
     });
 });
 
-router.delete('/', (req, res, next) => {
+router.delete('/:productId', (req, res, next) => {
     res.status(200).json({
         message: 'Deleting requests to /products'
     });
