@@ -4,6 +4,23 @@ const app = express();
 // body parser helps with url encoding, getting json data from the request
 const bodyParser = require('body-parser');
 
+//CORS error prevention
+// Giving access to clients with different server origin
+app.use((req, res, next) => {
+    // all client server should have access from the restful API
+    // very typical to do it in all restful API
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === 'OPTION'){
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).json({});
+    }
+    next();
+})
+
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
