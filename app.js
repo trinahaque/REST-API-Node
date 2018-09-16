@@ -1,9 +1,14 @@
 // this will make handing request a lot easier
 const express = require('express');
 const app = express();
+// body parser helps with url encoding, getting json data from the request
+const bodyParser = require('body-parser');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
