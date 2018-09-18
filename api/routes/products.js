@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require("mongoose");
+
+// importing the Product from the model
+const Product = require("../models/product");
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -8,10 +12,21 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const product = {
-        productId: req.body.productId,
-        price: req.body.quantity.price
-    };
+    // new Product is the name of the model
+    const product = new Product({
+        // this will automatically create a new id
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price
+    });
+    
+    // save() provided my mongoose that will save the data in the database
+    // result will give the result of the operation in the database
+    product.save().then(result => {
+        console.log(result);
+    })
+    .catch(err => console.log(err));
+
     res.status(201).json({
         message: 'Handling POST requests to /products',
         product: product
@@ -21,17 +36,21 @@ router.post('/', (req, res, next) => {
 // sending product id
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    if (id === 'special'){
-        res.status(200).json({
-            message: 'You discovered the special ID',
-            id: id
-        });
-    }
-    else{
-        res.status(200).json({
-            message: "failed"
+    
+    Product.findById(id)
+        .exec()
+        .then(doc => {
+            console.log("From database", doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else{
+                res.status(404).json({message: "No valid entry found for the id"});
+            }
         })
-    }
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
 });
 
 // patch basically updates a record
