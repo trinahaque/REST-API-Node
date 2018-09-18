@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 // body parser helps with url encoding, getting json data from the request
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 //CORS error prevention
 // Giving access to clients with different server origin
@@ -23,6 +24,12 @@ app.use((req, res, next) => {
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+mongoose.connect("mongodb+srv://kay:" + 
+process.env.MONGO_ATLAS_PW +
+"@cluster0.mongodb.net/?serverSelectionTryOnce=false&serverSelectionTimeoutMS=15000");
+// db = mongoc_client_get_database (client, "test");
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
