@@ -5,10 +5,20 @@ const mongoose = require("mongoose");
 // importing the Product from the model
 const Product = require("../models/product");
 
+// this route gets all the products
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests to /products'
-    });
+    Product.find()
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
 });
 
 router.post('/', (req, res, next) => {
@@ -24,12 +34,16 @@ router.post('/', (req, res, next) => {
     // result will give the result of the operation in the database
     product.save().then(result => {
         console.log(result);
+        res.status(201).json({
+            message: 'Handling POST requests to /products',
+            product: result
+        });
     })
-    .catch(err => console.log(err));
-
-    res.status(201).json({
-        message: 'Handling POST requests to /products',
-        product: product
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
     });
 });
  
@@ -46,11 +60,11 @@ router.get('/:productId', (req, res, next) => {
             } else{
                 res.status(404).json({message: "No valid entry found for the id"});
             }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err});
-        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: err});
+    });
 });
 
 // patch basically updates a record
@@ -61,8 +75,17 @@ router.patch('/:productId', (req, res, next) => {
 });
 
 router.delete('/:productId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Deleting requests to /products'
+    const id = req.params.productId;
+    Product.remove({ _id: id })
+        .exec()
+        .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
 });
 
