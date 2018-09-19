@@ -25,9 +25,13 @@ app.use((req, res, next) => {
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
-mongoose.connect("mongodb+srv://kay:" + 
+// mongoose.connect("mongodb+srv://kay:" + 
+// process.env.MONGO_ATLAS_PW +
+// "@cluster0.mongodb.net/?serverSelectionTryOnce=false&serverSelectionTimeoutMS=15000");
+
+mongoose.connect("mongodb://video-tutorial:" + 
 process.env.MONGO_ATLAS_PW +
-"@cluster0.mongodb.net/?serverSelectionTryOnce=false&serverSelectionTimeoutMS=15000");
+"@video-tutorial-shard-00-00-7pup8.mongodb.net:27017,video-tutorial-shard-00-01-7pup8.mongodb.net:27017,video-tutorial-shard-00-02-7pup8.mongodb.net:27017/test?ssl=true&replicaSet=video-tutorial-shard-0&authSource=admin&retryWrites=true")
 // db = mongoc_client_get_database (client, "test");
 
 
