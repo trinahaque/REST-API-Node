@@ -5,6 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+app.use(express.static('./public'));
+
 //CORS error prevention
 // Giving access to clients with different server origin
 app.use((req, res, next) => {
